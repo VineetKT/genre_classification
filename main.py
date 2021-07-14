@@ -14,13 +14,14 @@ def go(config: DictConfig):
 
     # You can get the path at the root of the MLflow project with this:
     root_path = hydra.utils.get_original_cwd()
+    print(config["main"]["execute_steps"])
 
     # Check which steps we need to execute
     if isinstance(config["main"]["execute_steps"], str):
         # This was passed on the command line as a comma-separated list of steps
         steps_to_execute = config["main"]["execute_steps"].split(",")
     else:
-        assert isinstance(config["main"]["execute_steps"], list)
+        # assert isinstance(config["main"]["execute_steps"], list)
         steps_to_execute = config["main"]["execute_steps"]
 
     # Download step
@@ -106,10 +107,10 @@ def go(config: DictConfig):
 
         # YOUR CODE HERE: call the evaluate step
         _ = mlflow.run(
-            os.path.join(root_path, 'random_forest'),
+            os.path.join(root_path, 'evaluate'),
             "main",
             parameters={
-                "model_export": config["random_forest_pipeline"]["export_artifact"],
+                "model_export": f"exercise_14/{config['random_forest_pipeline']['export_artifact']}:latest",
                 "test_data": "exercise_14/data_test.csv:latest",
             },
         )
