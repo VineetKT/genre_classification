@@ -45,7 +45,7 @@ def go(config: DictConfig):
             os.path.join(root_path, 'preprocess'),
             "main",
             parameters={
-                "input_artifact": "exercise_14/raw_data.parquet:latest",
+                "input_artifact": f"{config['main']['project_name']}/raw_data.parquet:latest",
                 "artifact_name": "preprocessed_data.csv",
                 "artifact_type": "preprocessed_data",
                 "artifact_description": "Preprocessed data",
@@ -59,7 +59,7 @@ def go(config: DictConfig):
             os.path.join(root_path, 'check_data'),
             "main",
             parameters={
-                "reference_artifact": "exercise_14/preprocessed_data.csv:latest",
+                "reference_artifact": f"{config['main']['project_name']}/preprocessed_data.csv:latest",
                 "sample_artifact": config["data"]["reference_dataset"],
                 "ks_alpha": config["data"]["ks_alpha"],
             },
@@ -72,7 +72,7 @@ def go(config: DictConfig):
             os.path.join(root_path, 'segregate'),
             "main",
             parameters={
-                "input_artifact": "exercise_14/preprocessed_data.csv:latest",
+                "input_artifact": f"{config['main']['project_name']}/preprocessed_data.csv:latest",
                 "artifact_root": "data",  # * Highlight here: TOOK HINT
                 "artifact_type": "splitted_data",
                 "test_size": config["data"]["test_size"],
@@ -94,7 +94,7 @@ def go(config: DictConfig):
             os.path.join(root_path, 'random_forest'),
             "main",
             parameters={
-                "train_data": "exercise_14/data_train.csv:latest",
+                "train_data": f"{config['main']['project_name']}/data_train.csv:latest",
                 "model_config": model_config,
                 "export_artifact": config["random_forest_pipeline"]["export_artifact"],
                 "random_seed": config["main"]["random_seed"],
@@ -110,8 +110,8 @@ def go(config: DictConfig):
             os.path.join(root_path, 'evaluate'),
             "main",
             parameters={
-                "model_export": f"exercise_14/{config['random_forest_pipeline']['export_artifact']}:latest",
-                "test_data": "exercise_14/data_test.csv:latest",
+                "model_export": f'{config["random_forest_pipeline"]["export_artifact"]}:latest',
+                "test_data": f"{config['main']['project_name']}/data_test.csv:latest",
             },
         )
 
