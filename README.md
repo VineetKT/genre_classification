@@ -2,7 +2,7 @@
 
 ## End-to-End Training Pipeline
 
-Genre CLassification using Random Forest CLassification algorithm
+Genre Classification using Random Forest Classification algorithm
 
 command to run:
 
